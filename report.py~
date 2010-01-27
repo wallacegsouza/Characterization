@@ -11,6 +11,7 @@ class Report:
     self.url = url
 
   def addTitle(self,titulo):
+    #width = 200/len(titulo)
     self.titulo = "%40s" % (titulo + "\n\n")
     return self
 
@@ -48,9 +49,12 @@ class Coluna:
     self.nome = nome
     self.value = value
     self.total = total
+    #self.value.append(nome)
+    #self.size = (len(nome)/2) +1
 
   def additem(self, item):
     self.value.append(item)
+    #return self
 
   def __len__(self):
     return len(self.value)

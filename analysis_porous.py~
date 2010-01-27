@@ -5,6 +5,7 @@ from Tkinter import *
 from  os import *
 import tkFileDialog
 from report import Report, Table
+from structureAnalysis import *
 from relatorios import *
 
 mydir = path.dirname(path.abspath(__file__))
