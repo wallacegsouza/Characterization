@@ -1,4 +1,8 @@
+#! /usr/bin/python
+# coding: utf-8
+
 from report import *
+from os import *
 from threading import Thread
 from PIL import Image
 from structureAnalysis import *
@@ -13,8 +17,11 @@ class GeradorRelatorio(Thread):
 
   def run(self):
     print "run()"
+    dirname = path.dirname(path.abspath(__file__))
+    
     if self.tipo == 'txt':
-      relatorio = Report(self.name+'.txt')
+      
+      relatorio = Report(dirname+'/'+self.name+'.txt')
     relatorio.addTitle("Porous Structure")
 
     img = Image.open(self.img_name)
@@ -32,12 +39,12 @@ class GeradorRelatorio(Thread):
     for name in cnAnalise:
       table_analise.addColumnName(name,[])
 
-    for path in result[1]:
-      table_analise.addColumnValue(cnAnalise[0], path.color)
-      table_analise.addColumnValue(cnAnalise[1], path.area)
-      table_analise.addColumnValue(cnAnalise[2], path.comprimentoHorizontal())
-      table_analise.addColumnValue(cnAnalise[3], path.comprimentoVertical())
-      table_analise.addColumnValue(cnAnalise[4], path.comprimentoMedio())
+    for path_img in result[1]:
+      table_analise.addColumnValue(cnAnalise[0], path_img.color)
+      table_analise.addColumnValue(cnAnalise[1], path_img.area)
+      table_analise.addColumnValue(cnAnalise[2], path_img.comprimentoHorizontal())
+      table_analise.addColumnValue(cnAnalise[3], path_img.comprimentoVertical())
+      table_analise.addColumnValue(cnAnalise[4], path_img.comprimentoMedio())
 
     table_analise.legenda = "obs.: comprimentos (px, um, mm)"
 
