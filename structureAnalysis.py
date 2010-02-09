@@ -27,6 +27,7 @@ def westAndEastAnalysis(img, pixel, pixel_list, target_color):
 
 # remover o retorno da imagem
 def floodFill(img, seed, target_color, replace_color):
+    print 'floodFill begin'
     q_pixel_list = []
     path = Path(replace_color)
 
@@ -85,6 +86,8 @@ def floodFill(img, seed, target_color, replace_color):
                         else:
                              break
             q_pixel_list = pixel_list
+
+    print 'floodFill end'
     return (img, path)
 
 def analysis(img, target_color=255):
@@ -103,6 +106,7 @@ def analysis(img, target_color=255):
     return (result, path_list)
 
 def intercepto(img, porous_color=255, solid_color=0, eliminate_board=True):
+    print 'intercepto begin!'
     lines_segmented = []
     rows_segmented = []
     porous_list_horizontal = []
@@ -162,6 +166,8 @@ def intercepto(img, porous_color=255, solid_color=0, eliminate_board=True):
                 solid_list_vertical.append(len(group))
             else:
                 porous_list_vertical.append(len(group))
+
+    print 'intercepto end'
 
     return {"porous_list_vertical":porous_list_vertical,
     "porous_list_horizontal":porous_list_horizontal,
