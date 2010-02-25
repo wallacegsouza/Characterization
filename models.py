@@ -4,7 +4,7 @@
 class Path:
     """
     """
-    def __init__(self, color):
+    def __init__(self, color=150):
         self.color = color
         self.area = 0
         self.min_horiz = 100000

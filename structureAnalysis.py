@@ -1,20 +1,35 @@
 #! /usr/bin/python
 # coding: utf-8
+#! /usr/bin/python
+# coding: utf-8
 
 import Image
 from models import Path
+from util import Color
+
+#def binarizeImage(img, threshold=128):
+#    if img.mode != 'L':
+#        img = img.convert('L')
+#    new_img = Image.new(img.mode, img.size)
+#    for i in range(new_img.size[0]):
+#        for j in range(new_img.size[1]):
+#            if img.getpixel((i,j)) <= threshold:
+#                new_img.putpixel((i,j), 0)
+#            else:
+#                new_img.putpixel((i,j), 255)
+#    return new_img
 
 def binarizeImage(img, threshold=128):
-    if img.mode != 'L':
-        img = img.convert('L')
-    new_img = Image.new(img.mode, img.size)
-    for i in range(new_img.size[0]):
-        for j in range(new_img.size[1]):
-            if img.getpixel((i,j)) <= threshold:
-                new_img.putpixel((i,j), 0)
-            else:
-                new_img.putpixel((i,j), 255)
-    return new_img
+  if img.mode != 'L':
+    img = img.convert('L')
+  new_img = Image.new('RGB', img.size)
+  for i in range(new_img.size[0]):
+    for j in range(new_img.size[1]):
+      if img.getpixel((i,j)) <= threshold:
+        new_img.putpixel((i,j), (0, 0, 0))
+      else:
+        new_img.putpixel((i,j), (255, 255, 255))
+  return new_img
 
 def westAndEastAnalysis(img, pixel, pixel_list, target_color):
     if (pixel[1]-1 > 0):
@@ -36,6 +51,7 @@ def floodFill(img, seed, target_color, replace_color):
         while q_pixel_list:
             pixel_list = []
             for ele in q_pixel_list:
+
                 if img.getpixel(ele) == target_color:
                     path.setMinHoriz(ele[0])
                     path.setMaxHoriz(ele[0])
@@ -88,22 +104,36 @@ def floodFill(img, seed, target_color, replace_color):
             q_pixel_list = pixel_list
 
     print 'floodFill end'
-    return (img, path)
+    return path
 
-def analysis(img, target_color=255):
-    path_number = -1
-    color = 10
+#def analysis(img, target_color=255):
+def analysis(img, target_color = (255, 255, 255)):
+    """
+    Esse metodo verifica cada pixel da imagem em busca dos pixel
+    da cor procurada. Toda vez que for encontrado um pixel da cor procurada
+    se aplica o floodFill para se marca o caminho
+    """
+    from random import randint
+    #path_number = -1
+    path_number = 0
+    #color = 10
+    color = Color()
     path_list = []
     for i in range(img.size[0]):
         for j in range(img.size[1]):
             if img.getpixel((i,j)) == target_color:
                 path_number = path_number + 1
-                result = floodFill(img, (i,j), target_color, color)
+                if (path_number / 2) == 0:
+                    a = color.corHSVAliatoria(randint(50,200))
+                else:
+                    a = color.corRGBAliatoria(randint(50,200))
+                #result = floodFill(img, (i,j), target_color, color)
+                result = floodFill(img, (i,j), target_color, a)
+                path_list.append(result)
+                #color=color+5
+    #img.save()
+    return (path_list,img)
 
-                path_list.append(result[1])
-                color=color+5
-
-    return (result, path_list)
 
 def intercepto(img, porous_color=255, solid_color=0, eliminate_board=True):
     print 'intercepto begin!'
