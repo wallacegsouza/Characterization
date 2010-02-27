@@ -143,6 +143,7 @@ class GeradorRelatorioTeste:
 
         report_output = relatorio.buildInColumns()
         report_output.close()
+        return report_output
 
 def log(i, dirname):
     log_de_erro = dirname + 'LogErro.txt'

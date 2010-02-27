@@ -20,14 +20,14 @@ class Report:
         return self
 
     def addbody(self, body):
-        self.body += "\n %10s" % body
+        self.body += "\n%10s" % body
         return self
 
     def addTable(self, table):
         self.addbody(table)
 
     def addrodape(self, footer):
-        self.footer += "\n\n %s" % footer
+        self.footer += "\n\n%s" % footer
         return self
 
     def build(self):
@@ -63,7 +63,7 @@ class Column:
                 output += i
             return "%s" % output
         else:
-            return " "
+            return ""
 
     def getMedian(self):
         return str(self.getTotal/len(self.value))
@@ -98,14 +98,14 @@ class Table:
         self.columns.append(coluna)
 
     def __str__(self):
-        output = "\n\n %s \n\n" % ( self.name.center(self.center_size) )
+        output = "\n\n%s\n\n" % ( self.name.center(self.center_size) )
         linha = 0
 
         #criando o cabecalho da tabela
         output += "N Linha\n"
 
         for title in self.columns:
-            output += "%s " % (title.name.center(self.center_size))
+            output += "%s" % (title.name.center(self.center_size))
 
         output += "\n"
 
@@ -117,14 +117,14 @@ class Table:
                 if len(i.value) > linha:
                         value = str(i.value[linha])
                 else:
-                        value = " "
+                        value = ""
 
                 output += "%s" % (value.center(self.center_size))
 
             output += "\n"
             linha += 1
 
-        output += "\n %s" % (str(self.legend))
+        output += "\n%s" % (str(self.legend))
 
         return output
 
